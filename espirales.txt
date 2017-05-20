@@ -1,0 +1,4 @@
+Quipitos,1200.0,10,a,1
+Quipitos,1500.5,20,a,4
+papas,123.0,23,a,2
+demass,123.0,123,a,3

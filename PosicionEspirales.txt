@@ -1,0 +1,16 @@
+a,1,true
+a,2,true
+a,3,true
+a,4,true
+b,1,false
+b,2,false
+b,3,false
+b,4,false
+c,1,false
+c,2,false
+c,3,false
+c,4,false
+d,1,false
+d,2,false
+d,3,false
+d,4,false
