@@ -2,17 +2,29 @@ package modelo;
 
 public class Arca {
 	
+	private int id;
 	private int denominacion;
 	private int cantidad;
 	private boolean vacia;
 	
-	public Arca(int denominacion, int cantidad, boolean vacia) {
+	public Arca(int id, int denominacion, int cantidad, boolean vacia) {
 		super();
+		this.id = id;
 		this.denominacion = denominacion;
 		this.cantidad = cantidad;
 		this.vacia = false;
 	}
 	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
+
 	public int getDenominacion() {
 		return denominacion;
 	}

@@ -26,7 +26,7 @@ public class ESArcas {
             linea = entrada.readLine();
             if(linea!=null){
                 String[] listaPalabras = linea.split(separador);
-                arcas.add(new Arca(Integer.parseInt(listaPalabras[0]),Integer.parseInt(listaPalabras[1]),Boolean.parseBoolean(listaPalabras[2])));
+                arcas.add(new Arca(Integer.parseInt(listaPalabras[0]), Integer.parseInt(listaPalabras[1]),Integer.parseInt(listaPalabras[2]),Boolean.parseBoolean(listaPalabras[3])));
             }
         }
         return arcas;
@@ -38,7 +38,7 @@ public class ESArcas {
             PrintStream salida_a_archivo = new PrintStream("arcas.txt");           
             while(itList.hasNext()){
                 Arca c=itList.next();
-                salida_a_archivo.println(c.getDenominacion()+","+c.getCantidad()+","+c.isVacia());
+                salida_a_archivo.println(c.getId()+","+c.getDenominacion()+","+c.getCantidad()+","+c.isVacia());
             }
             salida_a_archivo.close();
         } catch (Exception e) {

@@ -32,10 +32,10 @@ public class AdministradorArca {
 		return true;
 	}
 	
-	public void editarDenominacion(int denominacion, int nuevaDenominacion) throws IOException {
+	public void editarDenominacion(int id, int nuevaDenominacion) throws IOException {
 		for (Iterator iterator = arcas.iterator(); iterator.hasNext();) {
 			Arca arca = (Arca) iterator.next();
-			if(arca.getDenominacion()==denominacion){
+			if(arca.getId()==id){
 				arcas.remove(arca);
 				arca.setDenominacion(nuevaDenominacion);
 				arcas.add(arca);
@@ -46,10 +46,10 @@ public class AdministradorArca {
 		}
 	}
 	
-	public void editarCantidad(int denominacion, int cantidad) throws IOException {
+	public void editarCantidad(int id, int cantidad) throws IOException {
 		for (Iterator iterator = arcas.iterator(); iterator.hasNext();) {
 			Arca arca = (Arca) iterator.next();
-			if(arca.getDenominacion()==denominacion){
+			if(arca.getId()==id){
 				arcas.remove(arca);
 				arca.setCantidad(cantidad);;
 				arcas.add(arca);
@@ -58,6 +58,10 @@ public class AdministradorArca {
 				break;
 			}
 		}
+	}
+
+	public List<Arca> obtenerArcas() {
+		return arcas;
 	}
 
 }

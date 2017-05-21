@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controlador.ControladorUsuarioAdministrador;
+import modelo.Arca;
 import modelo.Espiral;
 import modelo.PosicionEspiral;
 
@@ -50,6 +51,19 @@ public class MenuAdministrador extends JDialog {
 	private JButton servicioBoton;
 	private JButton eliminarEspiralBoton;
 	private JComboBox eliminarEspiralLista;
+	private JLabel lblAgregarArca;
+	private JLabel lblNombreArca;
+	private JTextField denominacionArcaAgregarCampoTexto;
+	private JLabel lblCantidad_1;
+	private JTextField cantidadDenominacionArcaCampoTexto;
+	private JButton agregarArcaBoton;
+	private JComboBox listaDeArcasComboBox;
+	private JLabel lblListaDeArcas;
+	private JLabel lblModificarArca;
+	private JTextField modificarDenominacionCampoText;
+	private JTextField modificarCantidadDenominacionCampoTexto;
+	private JButton modificarDenominacionArcaBoton;
+	private JButton modificarCantidadDenominacionBoton;
 
 	/**
 	 * Create the dialog.
@@ -58,7 +72,7 @@ public class MenuAdministrador extends JDialog {
 	public MenuAdministrador(LoginAdministrador parent, boolean modal) throws IOException {
 		super(parent, modal);
 		controladorUsuarioAdministrador = new ControladorUsuarioAdministrador();
-		setBounds(100, 100, 781, 325);
+		setBounds(100, 100, 944, 325);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -66,128 +80,131 @@ public class MenuAdministrador extends JDialog {
 		
 		JLabel lblAgregarEspiral = new JLabel("AGREGAR ESPIRAL");
 		lblAgregarEspiral.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAgregarEspiral.setBounds(10, 0, 140, 14);
+		lblAgregarEspiral.setBounds(10, 0, 170, 14);
 		contentPanel.add(lblAgregarEspiral);
 		
 		JLabel lblNombreProducto = new JLabel("Nombre Producto");
-		lblNombreProducto.setBounds(10, 25, 115, 14);
+		lblNombreProducto.setBounds(10, 25, 170, 14);
 		contentPanel.add(lblNombreProducto);
 		
 		agregarNombreProductoCampoTexto = new JTextField();
-		agregarNombreProductoCampoTexto.setBounds(10, 42, 140, 20);
+		agregarNombreProductoCampoTexto.setBounds(10, 42, 170, 20);
 		contentPanel.add(agregarNombreProductoCampoTexto);
 		agregarNombreProductoCampoTexto.setColumns(10);
 		
 		JLabel lblPrecio = new JLabel("Precio ");
-		lblPrecio.setBounds(10, 73, 115, 14);
+		lblPrecio.setBounds(10, 73, 170, 14);
 		contentPanel.add(lblPrecio);
 		
 		agregarPrecioProductoCampoTexto = new JTextField();
 		agregarPrecioProductoCampoTexto.setColumns(10);
-		agregarPrecioProductoCampoTexto.setBounds(10, 89, 140, 20);
+		agregarPrecioProductoCampoTexto.setBounds(10, 89, 170, 20);
 		contentPanel.add(agregarPrecioProductoCampoTexto);
 		
 		JLabel lblCantidad = new JLabel("Cantidad");
-		lblCantidad.setBounds(10, 120, 115, 14);
+		lblCantidad.setBounds(10, 120, 170, 14);
 		contentPanel.add(lblCantidad);
 		
 		agregarCantidadProductoCampoTexto = new JTextField();
 		agregarCantidadProductoCampoTexto.setColumns(10);
-		agregarCantidadProductoCampoTexto.setBounds(10, 136, 140, 20);
+		agregarCantidadProductoCampoTexto.setBounds(10, 136, 170, 20);
 		contentPanel.add(agregarCantidadProductoCampoTexto);
 		
 		agregarEspiralBoton = new JButton("Agregar Espiral");
 		agregarEspiralBoton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				if(agregarEspiralBoton.isEnabled())
 				agregarEspiral();				
 			}
 		});
 		
-		agregarEspiralBoton.setBounds(10, 195, 140, 23);
+		agregarEspiralBoton.setBounds(10, 195, 170, 23);
 		contentPanel.add(agregarEspiralBoton);
 		
 		agregarListaPosicionesEspirales = new JComboBox();
-		agregarListaPosicionesEspirales.setBounds(10, 164, 140, 20);
+		agregarListaPosicionesEspirales.setBounds(10, 164, 170, 20);
 		contentPanel.add(agregarListaPosicionesEspirales);
 		
 		JLabel lblEditarEspiral = new JLabel("EDITAR ESPIRAL");
 		lblEditarEspiral.setHorizontalAlignment(SwingConstants.CENTER);
-		lblEditarEspiral.setBounds(176, 0, 140, 14);
+		lblEditarEspiral.setBounds(190, 0, 170, 14);
 		contentPanel.add(lblEditarEspiral);
 		
 		JLabel label_1 = new JLabel("Nombre Producto");
-		label_1.setBounds(176, 25, 140, 14);
+		label_1.setBounds(190, 25, 170, 14);
 		contentPanel.add(label_1);
 		
 		editarNombreEspiralCampoTexto = new JTextField();
 		editarNombreEspiralCampoTexto.setColumns(10);
-		editarNombreEspiralCampoTexto.setBounds(176, 42, 140, 20);
+		editarNombreEspiralCampoTexto.setBounds(190, 42, 170, 20);
 		contentPanel.add(editarNombreEspiralCampoTexto);
 		
 		JLabel label_2 = new JLabel("Precio ");
-		label_2.setBounds(176, 73, 140, 14);
+		label_2.setBounds(190, 73, 170, 14);
 		contentPanel.add(label_2);
 		
 		editarPrecioCampoTexto = new JTextField();
 		editarPrecioCampoTexto.setColumns(10);
-		editarPrecioCampoTexto.setBounds(176, 89, 140, 20);
+		editarPrecioCampoTexto.setBounds(190, 89, 170, 20);
 		contentPanel.add(editarPrecioCampoTexto);
 		
 		JLabel label_3 = new JLabel("Cantidad");
-		label_3.setBounds(176, 120, 140, 14);
+		label_3.setBounds(190, 120, 170, 14);
 		contentPanel.add(label_3);
 		
 		editarCantidadCampoTexto = new JTextField();
 		editarCantidadCampoTexto.setColumns(10);
-		editarCantidadCampoTexto.setBounds(176, 136, 140, 20);
+		editarCantidadCampoTexto.setBounds(190, 136, 170, 20);
 		contentPanel.add(editarCantidadCampoTexto);
 		
 		editarListaProductoEnEspiral = new JComboBox();
-		editarListaProductoEnEspiral.setBounds(176, 164, 140, 20);
+		editarListaProductoEnEspiral.setBounds(190, 164, 170, 20);
 		contentPanel.add(editarListaProductoEnEspiral);
 		
 		editarBotonEspiral = new JButton("Editar Espiral");
 		editarBotonEspiral.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				if(editarBotonEspiral.isEnabled())
 				editarEspiral();
 			}
 		});
 		
-		editarBotonEspiral.setBounds(176, 195, 140, 23);
+		editarBotonEspiral.setBounds(190, 195, 170, 23);
 		contentPanel.add(editarBotonEspiral);
 		
 		JLabel label = new JLabel("Cantidad");
-		label.setBounds(340, 25, 140, 14);
+		label.setBounds(370, 25, 170, 14);
 		contentPanel.add(label);
 		
 		modificarCantidadCampoTexto = new JTextField();
 		modificarCantidadCampoTexto.setColumns(10);
-		modificarCantidadCampoTexto.setBounds(340, 42, 140, 20);
+		modificarCantidadCampoTexto.setBounds(370, 42, 170, 20);
 		contentPanel.add(modificarCantidadCampoTexto);
 		
 		modificarCantidadListaNombres = new JComboBox();
-		modificarCantidadListaNombres.setBounds(340, 70, 140, 20);
+		modificarCantidadListaNombres.setBounds(370, 70, 170, 20);
 		contentPanel.add(modificarCantidadListaNombres);
 		
 		JLabel lblEditarCantidad = new JLabel("EDITAR CANTIDAD ESPIRAL");
 		lblEditarCantidad.setHorizontalAlignment(SwingConstants.CENTER);
-		lblEditarCantidad.setBounds(340, 0, 140, 14);
+		lblEditarCantidad.setBounds(370, 0, 170, 14);
 		contentPanel.add(lblEditarCantidad);
 		
 		modificarCantidadBoton = new JButton("Modificar Cantidad");
 		modificarCantidadBoton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				if(modificarCantidadBoton.isEnabled())
 				editarCantidadEspiral();
 			}
 		});
-		modificarCantidadBoton.setBounds(340, 101, 140, 23);
+		modificarCantidadBoton.setBounds(370, 101, 170, 23);
 		contentPanel.add(modificarCantidadBoton);
 		
 		eliminarEspiralLista = new JComboBox();
-		eliminarEspiralLista.setBounds(340, 164, 140, 20);
+		eliminarEspiralLista.setBounds(370, 164, 170, 20);
 		contentPanel.add(eliminarEspiralLista);
 		
 		eliminarEspiralBoton = new JButton("Eliminar Espiral");
@@ -195,6 +212,7 @@ public class MenuAdministrador extends JDialog {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				try {
+					if(eliminarEspiralBoton.isEnabled())
 					eliminarEspiral();
 				} catch (HeadlessException e) {
 					// TODO Auto-generated catch block
@@ -205,13 +223,101 @@ public class MenuAdministrador extends JDialog {
 				}
 			}
 		});
-		eliminarEspiralBoton.setBounds(340, 195, 140, 23);
+		eliminarEspiralBoton.setBounds(370, 195, 170, 23);
 		contentPanel.add(eliminarEspiralBoton);
 		
 		JLabel lblEliminarEspiral = new JLabel("ELIMINAR ESPIRAL");
 		lblEliminarEspiral.setHorizontalAlignment(SwingConstants.CENTER);
-		lblEliminarEspiral.setBounds(340, 139, 140, 14);
+		lblEliminarEspiral.setBounds(370, 139, 170, 14);
 		contentPanel.add(lblEliminarEspiral);
+		
+		lblAgregarArca = new JLabel("AGREGAR ARCA");
+		lblAgregarArca.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAgregarArca.setBounds(550, 0, 170, 14);
+		contentPanel.add(lblAgregarArca);
+		
+		lblNombreArca = new JLabel("Denominaci\u00F3n Arca");
+		lblNombreArca.setBounds(550, 25, 170, 14);
+		contentPanel.add(lblNombreArca);
+		
+		denominacionArcaAgregarCampoTexto = new JTextField();
+		denominacionArcaAgregarCampoTexto.setColumns(10);
+		denominacionArcaAgregarCampoTexto.setBounds(550, 42, 170, 20);
+		contentPanel.add(denominacionArcaAgregarCampoTexto);
+		
+		lblCantidad_1 = new JLabel("Cantidad");
+		lblCantidad_1.setBounds(550, 73, 170, 14);
+		contentPanel.add(lblCantidad_1);
+		
+		cantidadDenominacionArcaCampoTexto = new JTextField();
+		cantidadDenominacionArcaCampoTexto.setColumns(10);
+		cantidadDenominacionArcaCampoTexto.setBounds(550, 89, 170, 20);
+		contentPanel.add(cantidadDenominacionArcaCampoTexto);
+		
+		agregarArcaBoton = new JButton("Agregar Arca");
+		agregarArcaBoton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(agregarArcaBoton.isEnabled())
+					agregarArca();
+			}
+		});
+		agregarArcaBoton.setBounds(550, 120, 170, 23);
+		contentPanel.add(agregarArcaBoton);
+		
+		listaDeArcasComboBox = new JComboBox();
+		listaDeArcasComboBox.setBounds(730, 42, 188, 20);
+		contentPanel.add(listaDeArcasComboBox);
+		
+		lblListaDeArcas = new JLabel("Lista de Arcas");
+		lblListaDeArcas.setBounds(730, 25, 170, 14);
+		contentPanel.add(lblListaDeArcas);
+		
+		lblModificarArca = new JLabel("MODIFICAR ARCA");
+		lblModificarArca.setHorizontalAlignment(SwingConstants.CENTER);
+		lblModificarArca.setBounds(730, 0, 188, 14);
+		contentPanel.add(lblModificarArca);
+		
+		JLabel label_4 = new JLabel("Denominaci\u00F3n Arca");
+		label_4.setBounds(730, 72, 170, 14);
+		contentPanel.add(label_4);
+		
+		modificarDenominacionCampoText = new JTextField();
+		modificarDenominacionCampoText.setColumns(10);
+		modificarDenominacionCampoText.setBounds(730, 89, 188, 20);
+		contentPanel.add(modificarDenominacionCampoText);
+		
+		JLabel label_5 = new JLabel("Cantidad");
+		label_5.setBounds(730, 149, 170, 14);
+		contentPanel.add(label_5);
+		
+		modificarCantidadDenominacionCampoTexto = new JTextField();
+		modificarCantidadDenominacionCampoTexto.setColumns(10);
+		modificarCantidadDenominacionCampoTexto.setBounds(730, 164, 188, 20);
+		contentPanel.add(modificarCantidadDenominacionCampoTexto);
+		
+		modificarDenominacionArcaBoton = new JButton("Modificar Denominac\u00EDon");
+		modificarDenominacionArcaBoton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (modificarDenominacionArcaBoton.isEnabled()) {
+					modificarDenominacion();
+				}
+			}
+		});
+		modificarDenominacionArcaBoton.setBounds(730, 116, 188, 23);
+		contentPanel.add(modificarDenominacionArcaBoton);
+		
+		modificarCantidadDenominacionBoton = new JButton("Modificar Cantidad");
+		modificarCantidadDenominacionBoton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(modificarCantidadDenominacionBoton.isEnabled())
+					editarCantidadDenominacion();
+			}
+		});
+		modificarCantidadDenominacionBoton.setBounds(730, 195, 188, 23);
+		contentPanel.add(modificarCantidadDenominacionBoton);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -221,7 +327,13 @@ public class MenuAdministrador extends JDialog {
 				servicioBoton.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent arg0) {
-						cambiarEstadoMaquina();
+						if(servicioBoton.isEnabled())
+							try {
+								cambiarEstadoMaquinaAdmin();
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 					}
 				});
 				servicioBoton.setFont(new Font("Yu Gothic UI Light", Font.PLAIN, 14));
@@ -232,10 +344,23 @@ public class MenuAdministrador extends JDialog {
 		}
 		cargarListas();
 		Component[] componentes = this.contentPanel.getComponents();
-		for (int i = 0; i < componentes.length; i++) {
-			if(componentes[i] instanceof JButton||componentes[i] instanceof JComboBox||componentes[i] instanceof JTextField){
-				componentes[i].setEnabled(false);
+		if(controladorUsuarioAdministrador.isServicio()){
+			for (int i = 0; i < componentes.length; i++) {
+				if(componentes[i] instanceof JButton||componentes[i] instanceof JComboBox||componentes[i] instanceof JTextField){
+					componentes[i].setEnabled(false);
+				}
 			}
+			servicioBoton.setBackground(new Color(255,0,0));
+			servicioBoton.setText("en Servicio");
+		}else{
+			for (int i = 0; i < componentes.length; i++) {
+				if(componentes[i] instanceof JButton||componentes[i] instanceof JComboBox||componentes[i] instanceof JTextField){
+					componentes[i].setEnabled(true);
+				}
+			}
+			servicioBoton.setEnabled(true);
+			servicioBoton.setBackground(new Color(50, 205,50));
+			servicioBoton.setText("Fuera de Servicio");
 		}
 		servicioBoton.setEnabled(true);
 	}
@@ -246,11 +371,18 @@ public class MenuAdministrador extends JDialog {
 		List<PosicionEspiral> listaPosicionesEspiralesDisponibles = controladorUsuarioAdministrador.obtenerEspiralesDisponibles();
 		List<PosicionEspiral> listaPosicionesEspiralesNoDisponibles = controladorUsuarioAdministrador.obtenerEspiralesNoDisponibles();
 		List<Espiral> listaEspirales = controladorUsuarioAdministrador.obtenerEspirales();
+		List<Arca> listaArcas = controladorUsuarioAdministrador.obtenerArcas();
 		
 		modificarCantidadListaNombres.removeAllItems();
 		editarListaProductoEnEspiral.removeAllItems();
 		agregarListaPosicionesEspirales.removeAllItems();
+		eliminarEspiralLista.removeAllItems();
+		listaDeArcasComboBox.removeAllItems();
 		
+		for (Iterator iterator = listaArcas.iterator(); iterator.hasNext();) {
+			Arca arca = (Arca) iterator.next();
+			listaDeArcasComboBox.addItem("id "+arca.getId()+" Den = "+arca.getDenominacion()+" #"+arca.getCantidad());
+		}
 		for (Iterator iterator = listaPosicionesEspiralesDisponibles.iterator(); iterator.hasNext();) {
 			PosicionEspiral posicionEspiral = (PosicionEspiral) iterator.next();
 			agregarListaPosicionesEspirales.addItem(posicionEspiral.getFila()+" "+posicionEspiral.getColumna());
@@ -264,6 +396,74 @@ public class MenuAdministrador extends JDialog {
 			eliminarEspiralLista.addItem(espiral.getFila()+" "+espiral.getColumna()+" "+espiral.getNombreProducto());
 			modificarCantidadListaNombres.addItem(espiral.getFila()+" "+espiral.getColumna()+" "+espiral.getNombreProducto());
 		}
+	}
+	
+	private void editarCantidadDenominacion() {
+		if (listaDeArcasComboBox.getItemCount()>0) {
+			try {
+				int cantidad = Integer.parseInt(modificarCantidadDenominacionCampoTexto.getText());
+				int id = Integer.parseInt(listaDeArcasComboBox.getSelectedItem().toString().substring(3,4));
+				controladorUsuarioAdministrador.editarCantidadDenominacion(id,cantidad);
+				JOptionPane.showMessageDialog(this, "Cantidad modificada.");
+				modificarCantidadDenominacionCampoTexto.setText("");
+				cargarListas();
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(this, "Ingresa denominacion entera.");
+			}
+		}else{
+			JOptionPane.showMessageDialog(this, "No hay arcas para modificar.");
+		}
+		
+	}
+	
+	private void modificarDenominacion() {
+		if (listaDeArcasComboBox.getItemCount()>0) {
+			try {
+				int denominacion = Integer.parseInt(modificarDenominacionCampoText.getText());
+				int id = Integer.parseInt(listaDeArcasComboBox.getSelectedItem().toString().substring(3,4));
+				controladorUsuarioAdministrador.editarDenominacion(id,denominacion);
+				JOptionPane.showMessageDialog(this, "Denominacion modificada.");
+				modificarDenominacionCampoText.setText("");
+				cargarListas();
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(this, "Ingresa denominacion entera.");
+			}
+		}else{
+			JOptionPane.showMessageDialog(this, "No hay arcas para modificar.");
+		}
+		
+	}
+	
+	private void agregarArca() {
+		try {
+			int denominacion = Integer.parseInt(denominacionArcaAgregarCampoTexto.getText());
+			int cantidad = Integer.parseInt(cantidadDenominacionArcaCampoTexto.getText());
+			if (cantidad>0) {
+				if (listaDeArcasComboBox.getItemCount()==0) {
+					controladorUsuarioAdministrador.agregarArca(new Arca(1,denominacion, cantidad, false));
+					denominacionArcaAgregarCampoTexto.setText("");
+					cantidadDenominacionArcaCampoTexto.setText("");
+				}else{
+					denominacionArcaAgregarCampoTexto.setText("");
+					cantidadDenominacionArcaCampoTexto.setText("");
+					int index = 0;
+					for (int i = 0; i < listaDeArcasComboBox.getItemCount(); i++) {
+						int temp = Integer.parseInt(listaDeArcasComboBox.getItemAt(i).toString().substring(3,4));
+						if(temp>index)
+							index=temp;
+					}
+					index++;
+					controladorUsuarioAdministrador.agregarArca(new Arca(index,denominacion, cantidad, false));
+				}
+				JOptionPane.showMessageDialog(this, "Arca agregada correctamente.");
+				cargarListas();
+			}else{
+				JOptionPane.showMessageDialog(this, "Cantidad debe ser mayor a cero");	
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this, "Digita Cantidades Enteras.");
+		}
+		
 	}
 	
 	private void eliminarEspiral() throws HeadlessException, IOException {
@@ -283,7 +483,7 @@ public class MenuAdministrador extends JDialog {
 		
 	}
 	
-	private void cambiarEstadoMaquina() {
+	private void cambiarEstadoMaquinaAdmin() throws IOException {
 		Component[] componentes = this.contentPanel.getComponents();
 		if(controladorUsuarioAdministrador.isServicio()){
 			for (int i = 0; i < componentes.length; i++) {
@@ -317,6 +517,7 @@ public class MenuAdministrador extends JDialog {
 					JOptionPane.showMessageDialog(this, "Error la cantidad no puede ser negativa.");
 				}else{
 					JOptionPane.showMessageDialog(this, "Cantidad editada correctamente.");
+					modificarCantidadCampoTexto.setText("");
 					controladorUsuarioAdministrador.editarCantidad(fila,columna,cantidad);
 					cargarListas();
 				}				

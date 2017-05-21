@@ -1,1 +1,3 @@
-Papas,1500.0,5,a,1
+Papas,1500.0,5,b,2
+Quipitos,700.0,5,a,1
+Tajaditas,1500.0,5,d,3
