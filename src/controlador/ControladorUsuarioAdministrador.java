@@ -2,44 +2,63 @@ package controlador;
 
 import java.io.IOException;
 import java.util.List;
-
-import modelo.AdministradorEspiral;
-import modelo.AdministradorPosicionEspiral;
 import modelo.Espiral;
+import modelo.Maquina;
 import modelo.PosicionEspiral;
 
 
 public class ControladorUsuarioAdministrador {
 	
-	AdministradorEspiral administradorEspiral;
-	AdministradorPosicionEspiral administradorPosicionEspiral;
-	
-	
+	Maquina maquina;	
 	
 	public ControladorUsuarioAdministrador() throws IOException {
 		super();
-		this.administradorEspiral = new AdministradorEspiral();
-		this.administradorPosicionEspiral = new AdministradorPosicionEspiral();
+		this.maquina = new Maquina();
 	}
-
-
 
 	public boolean agregarEspiral(Espiral espiral) throws IOException{
-		return administradorEspiral.agregarEspiral(espiral);
+		return maquina.getAdministradorEspiral().agregarEspiral(espiral);
 	}
 
-
-
 	public List<PosicionEspiral> obtenerEspiralesDisponibles() throws IOException {
-		return administradorPosicionEspiral.obtenerPosicionesDesocupadas();
+		return maquina.getAdministradorPosicionEspiral().obtenerPosicionesDesocupadas();
 	}
 	
 	public List<PosicionEspiral> obtenerEspiralesNoDisponibles() throws IOException {
-		return administradorPosicionEspiral.obtenerPosicionesOcupadas();
+		return maquina.getAdministradorPosicionEspiral().obtenerPosicionesOcupadas();
 	}
 	
 	public void ocuparPosicionEspiral(PosicionEspiral posicionEspiralData) throws IOException{
-		administradorPosicionEspiral.modificarPosicionEspiralAOcupado(posicionEspiralData);
+		maquina.getAdministradorPosicionEspiral().modificarPosicionEspiralAOcupado(posicionEspiralData);
+	}
+
+	public boolean editarEspiral(Espiral espiral) throws IOException {
+		return maquina.getAdministradorEspiral().editarEspiral(espiral);
+	}
+
+	public List<Espiral> obtenerEspirales() {
+		return maquina.getAdministradorEspiral().obtenerEspirales();
+	}
+
+	public void editarCantidad(char fila, int columna, int cantidad) throws IOException {
+		maquina.getAdministradorEspiral().editarCantidad(fila, columna, cantidad);
+	}
+
+	public boolean isServicio() {
+		return maquina.isServicio();
+	}
+
+	public void cambiarEstadoMaquina(boolean b) {
+		maquina.setServicio(b);
+	}
+
+	public boolean eliminarEspiral(char fila, int columna) throws IOException {
+		return maquina.getAdministradorEspiral().eliminarEspiral(fila, columna);
+	}
+
+	public void desocuparPosicionEspiral(PosicionEspiral posicionEspiral) throws IOException {
+		maquina.getAdministradorPosicionEspiral().modificarPosicionEspiralADesocupado(posicionEspiral);
+		
 	}
 
 }
