@@ -483,15 +483,19 @@ public class UsuarioCliente extends JFrame {
 							mensajesTextArea.append("\n"+vueltasCliente.get(j));
 						}
 						if(listaEspirales.get(i).getCantidadProducto()==0){
+							listaEspirales.remove(i);
 							controladorUsuarioCliente.guardarEspirales(listaEspirales);
 							controladorUsuarioCliente.eliminarPosicionEspiral(listaEspirales.get(i).getFila(),listaEspirales.get(i).getColumna());
 						}
 						saldoTextArea.setText("");
 						controladorUsuarioCliente.guardarArcas(arcas);
+						vueltasCliente.clear();
+						saldoCliente.clear();
 						borrarContenidoProductos();
 						cargarProductosEnEspirales();
 					}else{
 						JOptionPane.showMessageDialog(this, "No tenemos cambio para tu compra. Te devolvemos tu dinero.");
+						cancelarTransaccion();
 					}
 				}else{
 					JOptionPane.showMessageDialog(this, "Saldo insuficiente");
@@ -505,6 +509,13 @@ public class UsuarioCliente extends JFrame {
 	
 	private void cargarDosMilPesos() throws IOException {
 		boolean cargaFallida = false;
+		int total = 0;
+		for (int i = 0; i < saldoCliente.size(); i++) {
+			total = total + saldoCliente.get(i);
+		}
+		if(total>10000){
+			JOptionPane.showMessageDialog(this, "No puedes cargar mas de 10000.");
+		}
 		arcas = controladorUsuarioCliente.cargarArcas();
 		for (int i = 0; i < arcas.size(); i++) {
 			if(arcas.get(i).getDenominacion()==2000){
@@ -528,6 +539,13 @@ public class UsuarioCliente extends JFrame {
 	
 	private void cargarQuinientosPesos() throws IOException {
 		boolean cargaFallida = false;
+		int total = 0;
+		for (int i = 0; i < saldoCliente.size(); i++) {
+			total = total + saldoCliente.get(i);
+		}
+		if(total>10000){
+			JOptionPane.showMessageDialog(this, "No puedes cargar mas de 10000.");
+		}
 		arcas = controladorUsuarioCliente.cargarArcas();
 		for (int i = 0; i < arcas.size(); i++) {
 			if(arcas.get(i).getDenominacion()==500){
@@ -549,6 +567,13 @@ public class UsuarioCliente extends JFrame {
 		
 	}
 	private void cargarMilPesos() throws IOException {
+		int total = 0;
+		for (int i = 0; i < saldoCliente.size(); i++) {
+			total = total + saldoCliente.get(i);
+		}
+		if(total>10000){
+			JOptionPane.showMessageDialog(this, "No puedes cargar mas de 10000.");
+		}
 		boolean cargaFallida = false;
 		arcas = controladorUsuarioCliente.cargarArcas();
 		for (int i = 0; i < arcas.size(); i++) {
@@ -573,6 +598,13 @@ public class UsuarioCliente extends JFrame {
 	
 	private void cargarDocientosPesos() throws IOException {
 		boolean cargaFallida = false;
+		int total = 0;
+		for (int i = 0; i < saldoCliente.size(); i++) {
+			total = total + saldoCliente.get(i);
+		}
+		if(total>10000){
+			JOptionPane.showMessageDialog(this, "No puedes cargar mas de 10000.");
+		}
 		arcas = controladorUsuarioCliente.cargarArcas();
 		for (int i = 0; i < arcas.size(); i++) {
 			if(arcas.get(i).getDenominacion()==200){
@@ -595,6 +627,13 @@ public class UsuarioCliente extends JFrame {
 	
 	private void cargarCienPesos() throws IOException {
 		boolean cargaFallida = false;
+		int total = 0;
+		for (int i = 0; i < saldoCliente.size(); i++) {
+			total = total + saldoCliente.get(i);
+		}
+		if(total>10000){
+			JOptionPane.showMessageDialog(this, "No puedes cargar mas de 10000.");
+		}
 		arcas = controladorUsuarioCliente.cargarArcas();
 		for (int i = 0; i < arcas.size(); i++) {
 			if(arcas.get(i).getDenominacion()==100){

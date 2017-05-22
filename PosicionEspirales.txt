@@ -10,7 +10,7 @@ c,1,false
 c,2,false
 c,3,false
 c,4,false
-d,1,false
+d,1,true
 d,2,false
-d,3,true
+d,3,false
 d,4,false
