@@ -1,3 +1,6 @@
-1,500,11,false
-2,100,50,false
-3,100,37,false
+5,2000,11,false
+4,1000,4,false
+1,500,10,false
+6,200,4,false
+3,100,7,false
+2,100,7,false

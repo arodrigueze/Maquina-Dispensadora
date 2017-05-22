@@ -6,6 +6,7 @@ import java.util.List;
 import modelo.Arca;
 import modelo.Espiral;
 import modelo.Maquina;
+import modelo.PosicionEspiral;
 
 public class ControladorUsuarioCliente {
 	
@@ -39,6 +40,19 @@ public class ControladorUsuarioCliente {
 
 	public void guardarArcas(List<Arca> arcas) throws IOException {
 		maquina.getAdministradorArca().guardarArcas(arcas);		
+	}
+
+
+
+	public void guardarEspirales(List<Espiral> listaEspirales) throws IOException {
+		maquina.getAdministradorEspiral().guardarEspirales(listaEspirales);
+		
+	}
+
+
+
+	public void eliminarPosicionEspiral(char fila, int columna) throws IOException {
+		maquina.getAdministradorPosicionEspiral().modificarPosicionEspiralADesocupado(new PosicionEspiral(fila, columna, false));		
 	}
 
 }

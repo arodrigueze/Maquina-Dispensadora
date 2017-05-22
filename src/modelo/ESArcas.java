@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -33,7 +34,18 @@ public class ESArcas {
 	}
 	
 	public boolean guardarArcas(List<Arca> arcas){
-        Iterator<Arca> itList = arcas.iterator();        
+        
+		arcas.sort(new Comparator<Arca>() {
+			@Override
+			public int compare(Arca o1, Arca o2) {
+				if(o1.getDenominacion()<o2.getDenominacion())
+					return 0;
+				return -1;
+			}
+		});
+		
+		Iterator<Arca> itList = arcas.iterator();  
+        
         try {
             PrintStream salida_a_archivo = new PrintStream("arcas.txt");           
             while(itList.hasNext()){

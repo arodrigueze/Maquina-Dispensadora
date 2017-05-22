@@ -71,6 +71,7 @@ public class UsuarioCliente extends JFrame {
 	private JButton dosmilBilleteBoton;
 	private List<Arca> arcas;
 	private List<Integer> saldoCliente;
+	private List<Integer> vueltasCliente;
 	private JTextArea mensajesTextArea;
 	private JTextArea saldoTextArea;
 	private JComboBox listaFilaComboBox;
@@ -106,6 +107,7 @@ public class UsuarioCliente extends JFrame {
 	 */
 	public UsuarioCliente() throws IOException {
 		saldoCliente = new ArrayList<>();
+		vueltasCliente = new ArrayList<>();
 		controladorUsuarioCliente = new ControladorUsuarioCliente();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 899, 431);
@@ -312,7 +314,12 @@ public class UsuarioCliente extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (comprarBoton.isEnabled()) {
-					comprar();
+					try {
+						comprar();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
 			}
 		});
@@ -323,6 +330,14 @@ public class UsuarioCliente extends JFrame {
 		contentPane.add(comprarBoton);
 		
 		JButton botonCancelar = new JButton("Cancelar");
+		botonCancelar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (botonCancelar.isEnabled()) {
+					cancelarTransaccion();
+				}
+			}
+		});
 		botonCancelar.setBackground(Color.RED);
 		botonCancelar.setFont(new Font("Swis721 Lt BT", Font.PLAIN, 22));
 		botonCancelar.setBounds(273, 316, 150, 60);
@@ -419,7 +434,20 @@ public class UsuarioCliente extends JFrame {
 		mensajesTextArea.append("Maquina dispensadora.");
 	}
 	
-	private void comprar() {
+	private void cancelarTransaccion() {
+		JOptionPane.showMessageDialog(this, "Compra cancelada");
+		saldoTextArea.setText("");
+		mensajesTextArea.setText("");
+		mensajesTextArea.append("\nCompra cancelada.");
+		mensajesTextArea.append("\nTe devolvemos tu dinero.");
+		for (int j = 0; j < saldoCliente.size(); j++) {
+			mensajesTextArea.append("\n"+saldoCliente.get(j));
+		}
+		vueltasCliente.clear();
+		saldoCliente.clear();
+	}
+	
+	private void comprar() throws IOException {
 		// TODO Auto-generated method stub
 		int total=0;
 		boolean hayProducto = false;
@@ -427,11 +455,44 @@ public class UsuarioCliente extends JFrame {
 			total=total+saldoCliente.get(i);
 		}
 		List<Espiral> listaEspirales = controladorUsuarioCliente.obtenerEspirales();
+		List<Arca> arcas = controladorUsuarioCliente.cargarArcas();
 		for (int i = 0; i<listaEspirales.size(); i++) {
 			if(listaEspirales.get(i).getFila()==listaFilaComboBox.getSelectedItem().toString().charAt(0)&&listaEspirales.get(i).getColumna()==Integer.parseInt(listaColumnaComboBox.getSelectedItem().toString())){
 				hayProducto=true;
 				if (listaEspirales.get(i).getPrecioProducto()<=total) {
-					return;
+					
+					listaEspirales.get(i).setCantidadProducto(listaEspirales.get(i).getCantidadProducto()-1);
+					
+					int diferencia = (int)(total-listaEspirales.get(i).getPrecioProducto());
+					
+					for (int j = 0; j < arcas.size(); j++) {
+						if(arcas.get(j).getDenominacion()<=diferencia && arcas.get(j).getCantidad()>0){
+							vueltasCliente.add(arcas.get(j).getDenominacion());
+							diferencia = diferencia-arcas.get(j).getDenominacion();
+							arcas.get(j).setCantidad(arcas.get(j).getCantidad()-1);
+						}
+						if(diferencia==0)
+							break;
+					}
+					if(diferencia==0){
+						JOptionPane.showMessageDialog(this, "Compra Éxitosa.");
+						mensajesTextArea.setText("");
+						mensajesTextArea.append("\nCompra éxitosa");
+						mensajesTextArea.append("\nTus vueltasa son:");
+						for (int j = 0; j < vueltasCliente.size(); j++) {
+							mensajesTextArea.append("\n"+vueltasCliente.get(j));
+						}
+						if(listaEspirales.get(i).getCantidadProducto()==0){
+							controladorUsuarioCliente.guardarEspirales(listaEspirales);
+							controladorUsuarioCliente.eliminarPosicionEspiral(listaEspirales.get(i).getFila(),listaEspirales.get(i).getColumna());
+						}
+						saldoTextArea.setText("");
+						controladorUsuarioCliente.guardarArcas(arcas);
+						borrarContenidoProductos();
+						cargarProductosEnEspirales();
+					}else{
+						JOptionPane.showMessageDialog(this, "No tenemos cambio para tu compra. Te devolvemos tu dinero.");
+					}
 				}else{
 					JOptionPane.showMessageDialog(this, "Saldo insuficiente");
 				}

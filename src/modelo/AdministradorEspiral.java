@@ -68,6 +68,11 @@ public class AdministradorEspiral {
 			}
 		}
 	}
+
+	public void guardarEspirales(List<Espiral> listaEspirales) throws IOException {
+		ioEspirales.cargarEspirales();
+		ioEspirales.guardarEspirales(listaEspirales);
+	}
 	
 	
 }
