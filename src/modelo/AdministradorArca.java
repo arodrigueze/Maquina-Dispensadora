@@ -64,4 +64,9 @@ public class AdministradorArca {
 		return arcas;
 	}
 
+	public void guardarArcas(List<Arca> arcas2) throws IOException {
+		ioarcas.cargarArcas();
+		ioarcas.guardarArcas(arcas2);
+	}
+
 }
