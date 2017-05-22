@@ -484,9 +484,9 @@ public class UsuarioCliente extends JFrame {
 						}
 						if(listaEspirales.get(i).getCantidadProducto()==0){
 							listaEspirales.remove(i);
-							controladorUsuarioCliente.guardarEspirales(listaEspirales);
 							controladorUsuarioCliente.eliminarPosicionEspiral(listaEspirales.get(i).getFila(),listaEspirales.get(i).getColumna());
 						}
+						controladorUsuarioCliente.guardarEspirales(listaEspirales);
 						saldoTextArea.setText("");
 						controladorUsuarioCliente.guardarArcas(arcas);
 						vueltasCliente.clear();
