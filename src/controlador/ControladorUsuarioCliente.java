@@ -55,4 +55,29 @@ public class ControladorUsuarioCliente {
 		maquina.getAdministradorPosicionEspiral().modificarPosicionEspiralADesocupado(new PosicionEspiral(fila, columna, false));		
 	}
 
+
+
+	public boolean comprarProducto(List<Integer> saldoCliente, char fila, int columna) throws IOException {
+		return maquina.comprarProducto(saldoCliente,fila,columna);
+	}
+	
+
+	public String getStatusMaquina() {
+		return maquina.getStatus();
+	}
+
+
+
+	public List<Integer> obtenerVueltasCliente() {
+		// TODO Auto-generated method stub
+		return maquina.getVueltas();
+	}
+
+
+
+	public void cancelarTransaccion(List<Integer> saldoCliente) throws IOException {
+		maquina.cancelarTransaccion(saldoCliente);
+		
+	}
+
 }

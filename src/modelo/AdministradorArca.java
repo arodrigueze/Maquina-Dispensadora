@@ -20,10 +20,18 @@ public class AdministradorArca {
 	}
 	
 	public boolean agregarArca(Arca arca) throws IOException{
-		arcas.add(arca);
-		ioarcas.cargarArcas();
-		ioarcas.guardarArcas(arcas);
-		return true;
+		if (arca.getCantidad()>500) {
+			return false;
+		}
+		if(arca.getDenominacion()==50||arca.getDenominacion()==100||arca.getDenominacion()==200||arca.getDenominacion()==500||arca.getDenominacion()==1000||arca.getDenominacion()==2000){
+			arcas.add(arca);
+			ioarcas.cargarArcas();
+			ioarcas.guardarArcas(arcas);
+			arcas.clear();
+			arcas = ioarcas.cargarArcas();
+			return true;
+		}
+		return false;
 	}
 	
 	public boolean eliminarArca(Arca arca) throws IOException{
@@ -33,32 +41,25 @@ public class AdministradorArca {
 		return true;
 	}
 	
-	public void editarDenominacion(int id, int nuevaDenominacion) throws IOException {
-		for (Iterator iterator = arcas.iterator(); iterator.hasNext();) {
-			Arca arca = (Arca) iterator.next();
-			if(arca.getId()==id){
-				arcas.remove(arca);
-				arca.setDenominacion(nuevaDenominacion);
-				arcas.add(arca);
-				ioarcas.cargarArcas();
-				ioarcas.guardarArcas(arcas);
-				break;
-			}
+	public boolean editarDenominacion(int nuevaDenominacion, Arca arca) throws IOException {
+		if(arca.getDenominacion()==50||arca.getDenominacion()==100||arca.getDenominacion()==200||arca.getDenominacion()==500||arca.getDenominacion()==1000||arca.getDenominacion()==2000){
+			int index = arcas.indexOf(arca);
+			arcas.get(index).setDenominacion(nuevaDenominacion);
+			ioarcas.cargarArcas();
+			ioarcas.guardarArcas(arcas);
+			return true;
 		}
+		return false;
 	}
 	
-	public void editarCantidad(int id, int cantidad) throws IOException {
-		for (Iterator iterator = arcas.iterator(); iterator.hasNext();) {
-			Arca arca = (Arca) iterator.next();
-			if(arca.getId()==id){
-				arcas.remove(arca);
-				arca.setCantidad(cantidad);;
-				arcas.add(arca);
-				ioarcas.cargarArcas();
-				ioarcas.guardarArcas(arcas);
-				break;
-			}
-		}
+	public boolean editarCantidad(int cantidad, Arca arca) throws IOException {
+		if(cantidad>500 || cantidad<=0)
+			return false;
+		int index = arcas.indexOf(arca);
+		arcas.get(index).setCantidad(cantidad);;
+		ioarcas.cargarArcas();
+		ioarcas.guardarArcas(arcas);
+		return true;
 	}
 
 	public List<Arca> obtenerArcas() {

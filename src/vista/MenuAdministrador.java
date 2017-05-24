@@ -381,7 +381,7 @@ public class MenuAdministrador extends JDialog {
 		
 		for (Iterator iterator = listaArcas.iterator(); iterator.hasNext();) {
 			Arca arca = (Arca) iterator.next();
-			listaDeArcasComboBox.addItem("id "+arca.getId()+" Den = "+arca.getDenominacion()+" #"+arca.getCantidad());
+			listaDeArcasComboBox.addItem("Den = "+arca.getDenominacion()+" #"+arca.getCantidad());
 		}
 		for (Iterator iterator = listaPosicionesEspiralesDisponibles.iterator(); iterator.hasNext();) {
 			PosicionEspiral posicionEspiral = (PosicionEspiral) iterator.next();
@@ -402,13 +402,16 @@ public class MenuAdministrador extends JDialog {
 		if (listaDeArcasComboBox.getItemCount()>0) {
 			try {
 				int cantidad = Integer.parseInt(modificarCantidadDenominacionCampoTexto.getText());
-				int id = Integer.parseInt(listaDeArcasComboBox.getSelectedItem().toString().substring(3,4));
-				controladorUsuarioAdministrador.editarCantidadDenominacion(id,cantidad);
+				List<Arca> arcas = controladorUsuarioAdministrador.obtenerArcas();
+				if (!controladorUsuarioAdministrador.editarCantidadDenominacion(cantidad,arcas.get(listaDeArcasComboBox.getSelectedIndex()))) {
+					JOptionPane.showMessageDialog(this, "Arca no puede contener mas de 500 unidades o menor a cero.");
+					return;
+				}
 				JOptionPane.showMessageDialog(this, "Cantidad modificada.");
 				modificarCantidadDenominacionCampoTexto.setText("");
 				cargarListas();
 			} catch (Exception e) {
-				JOptionPane.showMessageDialog(this, "Ingresa denominacion entera.");
+				JOptionPane.showMessageDialog(this, "Ingresa cantidad entera.");
 			}
 		}else{
 			JOptionPane.showMessageDialog(this, "No hay arcas para modificar.");
@@ -420,8 +423,10 @@ public class MenuAdministrador extends JDialog {
 		if (listaDeArcasComboBox.getItemCount()>0) {
 			try {
 				int denominacion = Integer.parseInt(modificarDenominacionCampoText.getText());
-				int id = Integer.parseInt(listaDeArcasComboBox.getSelectedItem().toString().substring(3,4));
-				controladorUsuarioAdministrador.editarDenominacion(id,denominacion);
+				List<Arca> arcas = controladorUsuarioAdministrador.obtenerArcas();
+				if(!controladorUsuarioAdministrador.editarDenominacion(denominacion,arcas.get(listaDeArcasComboBox.getSelectedIndex()))){
+					JOptionPane.showMessageDialog(this, "Denominacion Invalida.");
+				}
 				JOptionPane.showMessageDialog(this, "Denominacion modificada.");
 				modificarDenominacionCampoText.setText("");
 				cargarListas();
@@ -438,27 +443,11 @@ public class MenuAdministrador extends JDialog {
 		try {
 			int denominacion = Integer.parseInt(denominacionArcaAgregarCampoTexto.getText());
 			int cantidad = Integer.parseInt(cantidadDenominacionArcaCampoTexto.getText());
-			if (cantidad>0) {
-				if (listaDeArcasComboBox.getItemCount()==0) {
-					controladorUsuarioAdministrador.agregarArca(new Arca(1,denominacion, cantidad, false));
-					denominacionArcaAgregarCampoTexto.setText("");
-					cantidadDenominacionArcaCampoTexto.setText("");
-				}else{
-					denominacionArcaAgregarCampoTexto.setText("");
-					cantidadDenominacionArcaCampoTexto.setText("");
-					int index = 0;
-					for (int i = 0; i < listaDeArcasComboBox.getItemCount(); i++) {
-						int temp = Integer.parseInt(listaDeArcasComboBox.getItemAt(i).toString().substring(3,4));
-						if(temp>index)
-							index=temp;
-					}
-					index++;
-					controladorUsuarioAdministrador.agregarArca(new Arca(index,denominacion, cantidad, false));
-				}
+			if(controladorUsuarioAdministrador.agregarArca(new Arca(denominacion, cantidad, false))){
 				JOptionPane.showMessageDialog(this, "Arca agregada correctamente.");
 				cargarListas();
 			}else{
-				JOptionPane.showMessageDialog(this, "Cantidad debe ser mayor a cero");	
+				JOptionPane.showMessageDialog(this, "Cantidad o denominacion invalida.");
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this, "Digita Cantidades Enteras.");
@@ -513,7 +502,7 @@ public class MenuAdministrador extends JDialog {
 			char fila = modificarCantidadListaNombres.getSelectedItem().toString().charAt(0);
 			int columna = Integer.parseInt(modificarCantidadListaNombres.getSelectedItem().toString().substring(2,3));
 			if(modificarCantidadListaNombres.getItemCount()>0){
-				if (cantidad<=0) {
+				if (cantidad<=0&&cantidad>50) {
 					JOptionPane.showMessageDialog(this, "Error la cantidad no puede ser negativa.");
 				}else{
 					JOptionPane.showMessageDialog(this, "Cantidad editada correctamente.");

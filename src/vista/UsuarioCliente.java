@@ -65,10 +65,12 @@ public class UsuarioCliente extends JFrame {
 	private BufferedImage imageMonedaDe200;
 	private BufferedImage imageBillete1000;
 	private BufferedImage imageBilleteDe2000;
+	private BufferedImage imageMonedaDe50;
 	private JButton docientosMonedaBoton;
 	private JButton quinientosMonedaBoton;
 	private JButton milBilleteBoton;
 	private JButton dosmilBilleteBoton;
+	private JButton cincuentaMonedaBoton;
 	private List<Arca> arcas;
 	private List<Integer> saldoCliente;
 	private List<Integer> vueltasCliente;
@@ -110,7 +112,7 @@ public class UsuarioCliente extends JFrame {
 		vueltasCliente = new ArrayList<>();
 		controladorUsuarioCliente = new ControladorUsuarioCliente();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 899, 431);
+		setBounds(100, 100, 899, 535);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -201,7 +203,22 @@ public class UsuarioCliente extends JFrame {
 		pro44.setBounds(351, 226, 100, 50);
 		contentPane.add(pro44);
 		
-		
+		cincuentaMonedaBoton = new JButton("New button");
+		cincuentaMonedaBoton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				try {
+					cargarCincuentaPesos();
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+			}
+		});
+		cincuentaMonedaBoton.setBounds(481, 37, 60, 60);
+		imageMonedaDe50 = ImageIO.read(new File("50.png"));
+		Image escalada50=imageMonedaDe50.getScaledInstance((int)cincuentaMonedaBoton.getSize().getWidth(), (int)cincuentaMonedaBoton.getSize().getHeight(), (int)java.awt.Image.SCALE_SMOOTH);
+		cincuentaMonedaBoton.setIcon(new ImageIcon(escalada50));
+		contentPane.add(cincuentaMonedaBoton);
 		
 		cienMonedaBoton = new JButton("New button");
 		cienMonedaBoton.addMouseListener(new MouseAdapter() {
@@ -217,11 +234,10 @@ public class UsuarioCliente extends JFrame {
 				}
 			}
 		});
-		cienMonedaBoton.setBounds(481, 36, 60, 60);
+		cienMonedaBoton.setBounds(481, 107, 60, 60);
 		imageMonedaDe100 = ImageIO.read(new File("100.png"));
 		Image escalada100=imageMonedaDe100.getScaledInstance((int)cienMonedaBoton.getSize().getWidth(), (int)cienMonedaBoton.getSize().getHeight(), (int)java.awt.Image.SCALE_SMOOTH);
 		cienMonedaBoton.setIcon(new ImageIcon(escalada100));
-		
 		contentPane.add(cienMonedaBoton);
 		
 		docientosMonedaBoton = new JButton("New button");
@@ -238,7 +254,7 @@ public class UsuarioCliente extends JFrame {
 				}
 			}
 		});
-		docientosMonedaBoton.setBounds(481, 107, 60, 60);
+		docientosMonedaBoton.setBounds(481, 178, 60, 60);
 		imageMonedaDe200 = ImageIO.read(new File("200.png"));
 		Image escalada200=imageMonedaDe200.getScaledInstance((int)docientosMonedaBoton.getSize().getWidth(), (int)docientosMonedaBoton.getSize().getHeight(), (int)java.awt.Image.SCALE_SMOOTH);
 		docientosMonedaBoton.setIcon(new ImageIcon(escalada200));
@@ -258,7 +274,7 @@ public class UsuarioCliente extends JFrame {
 				}
 			}
 		});
-		quinientosMonedaBoton.setBounds(481, 178, 60, 60);
+		quinientosMonedaBoton.setBounds(481, 249, 60, 60);
 		imageMonedaDe500 = ImageIO.read(new File("500.png"));
 		Image escalada500=imageMonedaDe500.getScaledInstance((int)quinientosMonedaBoton.getSize().getWidth(), (int)quinientosMonedaBoton.getSize().getHeight(), (int)java.awt.Image.SCALE_SMOOTH);
 		quinientosMonedaBoton.setIcon(new ImageIcon(escalada500));
@@ -278,7 +294,7 @@ public class UsuarioCliente extends JFrame {
 				}
 			}
 		});
-		milBilleteBoton.setBounds(481, 249, 60, 60);
+		milBilleteBoton.setBounds(481, 320, 60, 60);
 		imageBillete1000 = ImageIO.read(new File("1000.png"));
 		Image escalada1000=imageBillete1000.getScaledInstance((int)milBilleteBoton.getSize().getWidth(), (int)milBilleteBoton.getSize().getHeight(), (int)java.awt.Image.SCALE_SMOOTH);
 		milBilleteBoton.setIcon(new ImageIcon(escalada1000));
@@ -298,7 +314,7 @@ public class UsuarioCliente extends JFrame {
 				}
 			}
 		});
-		dosmilBilleteBoton.setBounds(481, 320, 60, 60);
+		dosmilBilleteBoton.setBounds(557, 320, 60, 60);
 		imageBilleteDe2000 = ImageIO.read(new File("2000.png"));
 		Image escalada2000=imageBilleteDe2000.getScaledInstance((int)dosmilBilleteBoton.getSize().getWidth(), (int)dosmilBilleteBoton.getSize().getHeight(), (int)java.awt.Image.SCALE_SMOOTH);
 		dosmilBilleteBoton.setIcon(new ImageIcon(escalada2000));
@@ -306,7 +322,7 @@ public class UsuarioCliente extends JFrame {
 		
 		saldoTextArea = new JTextArea();
 		saldoTextArea.setEditable(false);
-		saldoTextArea.setBounds(667, 36, 180, 132);
+		saldoTextArea.setBounds(667, 36, 180, 202);
 		contentPane.add(saldoTextArea);
 		
 		JButton comprarBoton = new JButton("Comprar");
@@ -334,7 +350,12 @@ public class UsuarioCliente extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (botonCancelar.isEnabled()) {
-					cancelarTransaccion();
+					try {
+						cancelarTransaccion();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
 			}
 		});
@@ -345,12 +366,12 @@ public class UsuarioCliente extends JFrame {
 		
 		mensajesTextArea = new JTextArea();
 		mensajesTextArea.setEditable(false);
-		mensajesTextArea.setBounds(667, 197, 180, 132);
+		mensajesTextArea.setBounds(667, 248, 180, 237);
 		contentPane.add(mensajesTextArea);
 		
 		JButton servicioBoton = new JButton("");
 		servicioBoton.setEnabled(false);
-		servicioBoton.setBounds(667, 340, 180, 40);
+		servicioBoton.setBounds(68, 424, 355, 40);
 		contentPane.add(servicioBoton);
 		
 		listaFilaComboBox = new JComboBox();
@@ -408,6 +429,8 @@ public class UsuarioCliente extends JFrame {
 		lblD = new JLabel("d");
 		lblD.setBounds(22, 231, 13, 14);
 		contentPane.add(lblD);
+		
+	
 		Component[] componentes = this.contentPane.getComponents();
 		if(controladorUsuarioCliente.isServicio()){
 			for (int i = 0; i < componentes.length; i++) {
@@ -434,8 +457,9 @@ public class UsuarioCliente extends JFrame {
 		mensajesTextArea.append("Maquina dispensadora.");
 	}
 	
-	private void cancelarTransaccion() {
+	private void cancelarTransaccion() throws IOException {
 		JOptionPane.showMessageDialog(this, "Compra cancelada");
+		controladorUsuarioCliente.cancelarTransaccion(saldoCliente);
 		saldoTextArea.setText("");
 		mensajesTextArea.setText("");
 		mensajesTextArea.append("\nCompra cancelada.");
@@ -449,62 +473,59 @@ public class UsuarioCliente extends JFrame {
 	
 	private void comprar() throws IOException {
 		// TODO Auto-generated method stub
-		int total=0;
-		boolean hayProducto = false;
-		for (int i = 0; i < saldoCliente.size(); i++) {
-			total=total+saldoCliente.get(i);
-		}
 		List<Espiral> listaEspirales = controladorUsuarioCliente.obtenerEspirales();
+		char fila = listaFilaComboBox.getSelectedItem().toString().charAt(0);
+		int columna = Integer.parseInt(listaColumnaComboBox.getSelectedItem().toString());
+		
+		if(controladorUsuarioCliente.comprarProducto(saldoCliente,fila,columna)){
+			JOptionPane.showMessageDialog(this, "Compra Éxitosa.");
+			vueltasCliente = controladorUsuarioCliente.obtenerVueltasCliente();
+			saldoTextArea.setText("");
+			mensajesTextArea.setText("");
+			mensajesTextArea.append("\nCompra éxitosa");
+			mensajesTextArea.append("\nTus vueltasa son:");
+			for (int j = 0; j < vueltasCliente.size(); j++) {
+				mensajesTextArea.append("\n"+vueltasCliente.get(j));
+			}
+			vueltasCliente.clear();
+			saldoCliente.clear();
+			borrarContenidoProductos();
+			cargarProductosEnEspirales();
+		}else{
+			JOptionPane.showMessageDialog(this, controladorUsuarioCliente.getStatusMaquina());
+		}		
+	}
+	
+	private void cargarCincuentaPesos() throws IOException {
+		// TODO Auto-generated method stub
+		boolean cargaFallida = false;
+		int total = 0;
+		for (int i = 0; i < saldoCliente.size(); i++) {
+			total = total + saldoCliente.get(i);
+		}
+		if(total>=10000){
+			JOptionPane.showMessageDialog(this, "No puedes cargar mas de 10000.");
+			return;
+		}
 		List<Arca> arcas = controladorUsuarioCliente.cargarArcas();
-		for (int i = 0; i<listaEspirales.size(); i++) {
-			if(listaEspirales.get(i).getFila()==listaFilaComboBox.getSelectedItem().toString().charAt(0)&&listaEspirales.get(i).getColumna()==Integer.parseInt(listaColumnaComboBox.getSelectedItem().toString())){
-				hayProducto=true;
-				if (listaEspirales.get(i).getPrecioProducto()<=total) {
-					
-					listaEspirales.get(i).setCantidadProducto(listaEspirales.get(i).getCantidadProducto()-1);
-					
-					int diferencia = (int)(total-listaEspirales.get(i).getPrecioProducto());
-					
-					for (int j = 0; j < arcas.size(); j++) {
-						if(arcas.get(j).getDenominacion()<=diferencia && arcas.get(j).getCantidad()>0){
-							vueltasCliente.add(arcas.get(j).getDenominacion());
-							diferencia = diferencia-arcas.get(j).getDenominacion();
-							arcas.get(j).setCantidad(arcas.get(j).getCantidad()-1);
-						}
-						if(diferencia==0)
-							break;
-					}
-					if(diferencia==0){
-						JOptionPane.showMessageDialog(this, "Compra Éxitosa.");
-						mensajesTextArea.setText("");
-						mensajesTextArea.append("\nCompra éxitosa");
-						mensajesTextArea.append("\nTus vueltasa son:");
-						for (int j = 0; j < vueltasCliente.size(); j++) {
-							mensajesTextArea.append("\n"+vueltasCliente.get(j));
-						}
-						if(listaEspirales.get(i).getCantidadProducto()==0){
-							listaEspirales.remove(i);
-							controladorUsuarioCliente.eliminarPosicionEspiral(listaEspirales.get(i).getFila(),listaEspirales.get(i).getColumna());
-						}
-						controladorUsuarioCliente.guardarEspirales(listaEspirales);
-						saldoTextArea.setText("");
-						controladorUsuarioCliente.guardarArcas(arcas);
-						vueltasCliente.clear();
-						saldoCliente.clear();
-						borrarContenidoProductos();
-						cargarProductosEnEspirales();
-					}else{
-						JOptionPane.showMessageDialog(this, "No tenemos cambio para tu compra. Te devolvemos tu dinero.");
-						cancelarTransaccion();
-					}
+		for (int i = 0; i < arcas.size(); i++) {
+			if(arcas.get(i).getDenominacion()==50){
+				if (arcas.get(i).getCantidad()<500) {
+					saldoCliente.add(50);
+					arcas.get(i).setCantidad(arcas.get(i).getCantidad()+1);
+					controladorUsuarioCliente.guardarArcas(arcas);
+					saldoTextArea.append("\n50");
+					return;
 				}else{
-					JOptionPane.showMessageDialog(this, "Saldo insuficiente");
+					cargaFallida = true;
 				}
 			}
 		}
-		if (!hayProducto) {
-			JOptionPane.showMessageDialog(this, "Espiral Vacia");	
-		}
+		if (cargaFallida) {
+			JOptionPane.showMessageDialog(this, "Temporalmente Denominacion Invalida.");
+		}else
+		JOptionPane.showMessageDialog(this, "Temporalmente Denominacion invalida");
+		
 	}
 	
 	private void cargarDosMilPesos() throws IOException {
@@ -513,13 +534,14 @@ public class UsuarioCliente extends JFrame {
 		for (int i = 0; i < saldoCliente.size(); i++) {
 			total = total + saldoCliente.get(i);
 		}
-		if(total>10000){
+		if(total>=10000){
 			JOptionPane.showMessageDialog(this, "No puedes cargar mas de 10000.");
+			return;
 		}
-		arcas = controladorUsuarioCliente.cargarArcas();
+		List<Arca> arcas = controladorUsuarioCliente.cargarArcas();
 		for (int i = 0; i < arcas.size(); i++) {
 			if(arcas.get(i).getDenominacion()==2000){
-				if (arcas.get(i).getCantidad()<50) {
+				if (arcas.get(i).getCantidad()<500) {
 					saldoCliente.add(2000);
 					arcas.get(i).setCantidad(arcas.get(i).getCantidad()+1);
 					controladorUsuarioCliente.guardarArcas(arcas);
@@ -543,13 +565,14 @@ public class UsuarioCliente extends JFrame {
 		for (int i = 0; i < saldoCliente.size(); i++) {
 			total = total + saldoCliente.get(i);
 		}
-		if(total>10000){
+		if(total>=10000){
 			JOptionPane.showMessageDialog(this, "No puedes cargar mas de 10000.");
+			return;
 		}
-		arcas = controladorUsuarioCliente.cargarArcas();
+		List<Arca> arcas = controladorUsuarioCliente.cargarArcas();
 		for (int i = 0; i < arcas.size(); i++) {
 			if(arcas.get(i).getDenominacion()==500){
-				if (arcas.get(i).getCantidad()<50) {
+				if (arcas.get(i).getCantidad()<500) {
 					saldoCliente.add(500);
 					arcas.get(i).setCantidad(arcas.get(i).getCantidad()+1);
 					controladorUsuarioCliente.guardarArcas(arcas);
@@ -571,14 +594,15 @@ public class UsuarioCliente extends JFrame {
 		for (int i = 0; i < saldoCliente.size(); i++) {
 			total = total + saldoCliente.get(i);
 		}
-		if(total>10000){
+		if(total>=10000){
 			JOptionPane.showMessageDialog(this, "No puedes cargar mas de 10000.");
+			return;
 		}
 		boolean cargaFallida = false;
-		arcas = controladorUsuarioCliente.cargarArcas();
+		List<Arca> arcas = controladorUsuarioCliente.cargarArcas();
 		for (int i = 0; i < arcas.size(); i++) {
 			if(arcas.get(i).getDenominacion()==1000){
-				if (arcas.get(i).getCantidad()<50) {
+				if (arcas.get(i).getCantidad()<500) {
 					saldoCliente.add(1000);
 					arcas.get(i).setCantidad(arcas.get(i).getCantidad()+1);
 					controladorUsuarioCliente.guardarArcas(arcas);
@@ -602,13 +626,14 @@ public class UsuarioCliente extends JFrame {
 		for (int i = 0; i < saldoCliente.size(); i++) {
 			total = total + saldoCliente.get(i);
 		}
-		if(total>10000){
+		if(total>=10000){
 			JOptionPane.showMessageDialog(this, "No puedes cargar mas de 10000.");
+			return;
 		}
-		arcas = controladorUsuarioCliente.cargarArcas();
+		List<Arca> arcas = controladorUsuarioCliente.cargarArcas();
 		for (int i = 0; i < arcas.size(); i++) {
 			if(arcas.get(i).getDenominacion()==200){
-				if (arcas.get(i).getCantidad()<50) {
+				if (arcas.get(i).getCantidad()<500) {
 					saldoCliente.add(200);
 					arcas.get(i).setCantidad(arcas.get(i).getCantidad()+1);
 					controladorUsuarioCliente.guardarArcas(arcas);
@@ -631,13 +656,14 @@ public class UsuarioCliente extends JFrame {
 		for (int i = 0; i < saldoCliente.size(); i++) {
 			total = total + saldoCliente.get(i);
 		}
-		if(total>10000){
+		if(total>=10000){
 			JOptionPane.showMessageDialog(this, "No puedes cargar mas de 10000.");
+			return;
 		}
-		arcas = controladorUsuarioCliente.cargarArcas();
+		List<Arca> arcas = controladorUsuarioCliente.cargarArcas();
 		for (int i = 0; i < arcas.size(); i++) {
 			if(arcas.get(i).getDenominacion()==100){
-				if (arcas.get(i).getCantidad()<50) {
+				if (arcas.get(i).getCantidad()<500) {
 					saldoCliente.add(100);
 					arcas.get(i).setCantidad(arcas.get(i).getCantidad()+1);
 					controladorUsuarioCliente.guardarArcas(arcas);

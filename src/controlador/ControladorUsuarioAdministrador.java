@@ -63,20 +63,20 @@ public class ControladorUsuarioAdministrador {
 		
 	}
 
-	public void agregarArca(Arca arca) throws IOException {
-		maquina.getAdministradorArca().agregarArca(arca);
+	public boolean agregarArca(Arca arca) throws IOException {
+		return maquina.getAdministradorArca().agregarArca(arca);
 	}
 
 	public List<Arca> obtenerArcas() {
 		return maquina.getAdministradorArca().obtenerArcas();
 	}
 
-	public void editarDenominacion(int id, int denominacion) throws IOException {
-		maquina.getAdministradorArca().editarDenominacion(id, denominacion);		
+	public boolean editarDenominacion(int denominacion, Arca arca) throws IOException {
+		return maquina.getAdministradorArca().editarDenominacion(denominacion, arca);		
 	}
 
-	public void editarCantidadDenominacion(int id, int cantidad) throws IOException {
-		maquina.getAdministradorArca().editarCantidad(id, cantidad);
+	public boolean editarCantidadDenominacion(int cantidad,Arca arca) throws IOException {
+		return maquina.getAdministradorArca().editarCantidad(cantidad,arca);
 	}
 
 }

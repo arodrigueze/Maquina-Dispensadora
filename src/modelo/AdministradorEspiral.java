@@ -18,6 +18,8 @@ public class AdministradorEspiral {
 	}
 	
 	public boolean agregarEspiral(Espiral espiral) throws IOException{
+		if(espiral.getPrecioProducto()%50!=0)
+			return false;
 		espirales.add(espiral);
 		ioEspirales.cargarEspirales();
 		ioEspirales.guardarEspirales(espirales);
@@ -38,6 +40,10 @@ public class AdministradorEspiral {
 	}
 
 	public boolean editarEspiral(Espiral espiralChange) throws IOException {
+		if(espiralChange.getPrecioProducto()%50!=0)
+			return false;
+		if(espiralChange.getCantidadProducto()<=0&&espiralChange.getCantidadProducto()>50)
+			return false;
 		for (Iterator iterator = espirales.iterator(); iterator.hasNext();) {
 			Espiral espiral = (Espiral) iterator.next();
 			if(espiral.getFila()==espiralChange.getFila()&&espiral.getColumna()==espiralChange.getColumna()){
